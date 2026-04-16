@@ -695,15 +695,8 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Chat Widget */}
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px', width: '380px', height: '520px', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.35)', zIndex: 9999 }}>
-        <iframe 
-          src="https://upscale-marketing.app.n8n.cloud/webhook/31c335d4-732a-4fc3-afd6-afea7c9284c2/chat"
-          width="100%" 
-          height="100%" 
-          frameBorder="0">
-        </iframe>
-      </div>
+      {/* 8. Chat-Widget Platzhalter */}
+      {/* CHAT WIDGET HIER EINFÜGEN */}
     </div>
   );
 }
