@@ -26,48 +26,48 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const stats = [
-    { icon: <Clock className="w-6 h-6" />, title: "Schnelle Hilfe bei Schäden", desc: "Kurzfristige Terminvergabe bei Sturmschäden, Undichtigkeit oder losem Material" },
-    { icon: <Calculator className="w-6 h-6" />, title: "Transparente Kalkulation", desc: "Klare Positionen, nachvollziehbarer Umfang – damit Preis und Leistung zusammenpassen" },
-    { icon: <Award className="w-6 h-6" />, title: "Meisterqualität bis ins Detail", desc: "Anschlüsse, Abdichtung, First & Traufe fachgerecht ausgeführt – für dauerhafte Dichtheit" },
-    { icon: <Stethoscope className="w-6 h-6" />, title: "Kostenlose Ersteinschätzung", desc: "Vorab telefonisch oder vor Ort: Zustand bewerten, Vorgehen empfehlen, sauber planen" }
+    { icon: <Clock className="w-6 h-6" />, title: "Einsatz-Garantie bei Schäden", desc: "Wir lassen Sie im Regen nicht stehen. Schnelle Hilfe bei Sturmschäden & Leckagen." },
+    { icon: <Calculator className="w-6 h-6" />, title: "Festpreis ohne Wenn & Aber", desc: "Klare Angebote, faire Postionen. Wir kalkulieren so, dass die Rechnung am Ende stimmt." },
+    { icon: <Award className="w-6 h-6" />, title: "Meister-Präzision vom Fach", desc: "Von der Mansarde bis zum First: Wir arbeiten nach modernsten Standards für maximale Langlebigkeit." },
+    { icon: <Stethoscope className="w-6 h-6" />, title: "Direkter Draht zum Profi", desc: "Keine Warteschleife. Wir bewerten Ihren Schaden sofort und planen die optimale Lösung." }
   ];
 
   const services = [
     {
-      title: "Flachdach & Abdichtung",
-      desc: "Zuverlässige Abdichtung und Instandsetzung für Flachdächer – funktional, langlebig und auf die Nutzung abgestimmt.",
-      image: "https://images.unsplash.com/photo-1633158829585-23ba8f7c8acc?auto=format&fit=crop&q=80&w=800",
-      cta: "Jetzt anfragen"
+      title: "Flachdach-Spezialisten",
+      desc: "Maximale Dichtigkeit für moderne Architektur. Wir sorgen dafür, dass Ihr Flachdach jahrzehntelang Wind und Wetter trotzt.",
+      image: "https://images.unsplash.com/photo-1508450859948-4e04fafd0554?auto=format&fit=crop&q=80&w=800",
+      cta: "Angebot anfordern"
     },
     {
-      title: "Dachfenster",
-      desc: "Einbau, Austausch oder Nachrüstung von Dachfenstern für mehr Tageslicht, besseren Wohnkomfort und saubere Anschlüsse.",
-      image: "https://images.unsplash.com/photo-1516714819001-8ee7a13b71d7?auto=format&fit=crop&q=80&w=800",
-      cta: "Jetzt anfragen"
+      title: "Dachfenster-Lösungen",
+      desc: "Mehr Licht, mehr Luft, mehr Lebensqualität. Passgenauer Einbau führender Marken für ein völlig neues Raumgefühl.",
+      image: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=800",
+      cta: "Licht ins Haus"
     },
     {
-      title: "Wärmedämmung",
-      desc: "Optimierte Dachdämmung für geringeren Wärmeverlust, spürbaren Wohnkomfort und eine verbesserte Energieeffizienz Ihres Hauses.",
-      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
-      cta: "Jetzt anfragen"
+      title: "Energetische Dämmung",
+      desc: "Sparen Sie bares Geld durch intelligente Gebäudehüllen. Wir halten die Wärme im Haus und die Heizkosten im Keller.",
+      image: "https://images.unsplash.com/photo-1505798577917-a65157d3320a?auto=format&fit=crop&q=80&w=800",
+      cta: "Energie sparen"
     },
     {
-      title: "Dachsanierung",
-      desc: "Umfassende energetische und optische Sanierung Ihres Daches – für Werterhalt, Schutz vor Witterung und moderne Energieeffizienz.",
+      title: "Dachsanierung 2.0",
+      desc: "Aus Alt wird Sicher. Wir bringen Substanz und Optik Ihres Daches auf das nächste Level – inklusive Wersteigerung Ihrer Immobilie.",
       image: "https://images.unsplash.com/photo-1482731215275-a1f151646268?auto=format&fit=crop&q=80&w=800",
-      cta: "Jetzt anfragen"
+      cta: "Werte erhalten"
     },
     {
-      title: "Neueindeckung",
-      desc: "Hochwertige Neueindeckungen mit modernen Ziegeln, Schiefer oder Metall – passgenau für Ihr Gebäude und Ihren individuellen Stil.",
+      title: "Individuelle Neueindeckung",
+      desc: "Das Gesicht Ihres Hauses. Wählen Sie aus exklusiven Materialien – wir setzen Ihre Vision handwerksgerecht um.",
       image: "https://images.unsplash.com/photo-1518349619113-03114f06ac3a?auto=format&fit=crop&q=80&w=800",
-      cta: "Jetzt anfragen"
+      cta: "Stilvoll wohnen"
     },
     {
-      title: "Dachreparaturen",
-      desc: "Schnelle und fachgerechte Reparatur von Sturmschäden, Undichtigkeiten oder defekten Anschlüssen – damit Ihr Haus geschützt bleibt.",
+      title: "Blitz-Reparatur",
+      desc: "Kein Schaden ist zu klein, kein Problem zu groß. Wir reparieren fachgerecht, bevor aus einer Kleinigkeit eine teure Sanierung wird.",
       image: "https://images.unsplash.com/photo-1498322676051-57d6051d95c4?auto=format&fit=crop&q=80&w=800",
-      cta: "Jetzt anfragen"
+      cta: "Hilfe anfordern"
     }
   ];
 
@@ -246,14 +246,14 @@ export default function App() {
               <span className="text-[10px] font-bold uppercase tracking-widest">Dachdecker Meisterbetrieb Hoffmann</span>
             </div>
             
-            <h1 className="text-3xl md:text-5xl lg:text-6xl mb-8 leading-[1.2] text-center max-w-4xl drop-shadow-lg">
-              Wenn’s richtig halten soll: <br className="hidden md:block"/> 
-              Dacharbeiten vom <br className="hidden md:block"/>
-              Meis­ter­betrieb in Dortmund
+            <h1 className="text-3xl md:text-5xl lg:text-6xl mb-8 leading-[1.2] text-center max-w-4xl drop-shadow-lg font-display font-black tracking-tight">
+              Sicher bei jedem Wetter: <br className="hidden md:block"/> 
+              Ihr Traditions-Dachdecker <br className="hidden md:block"/>
+              mitten aus Dortmund
             </h1>
             
-            <p className="text-base md:text-lg text-slate-100 mb-10 max-w-2xl leading-relaxed drop-shadow-md text-center">
-              Vom Vor-Ort-Check bis zur Übergabe läuft alles strukturiert. Ein Ansprechpartner, feste Termine, saubere Baustelle – und ein Dach, auf das Sie sich verlassen können.
+            <p className="text-base md:text-lg text-slate-100 mb-10 max-w-2xl leading-relaxed drop-shadow-md text-center font-medium">
+              Ob Steildach, Flachdach oder Notfall-Reparatur – wir setzen auf ehrliches Handwerk, faire Preise und Ergebnisse, die Sie nachts ruhig schlafen lassen.
             </p>
 
             <div className="flex flex-wrap xl:flex-nowrap justify-center gap-3 md:gap-4 mb-16 text-center w-full">
@@ -325,22 +325,22 @@ export default function App() {
               viewport={{ once: true }}
             >
               <div className="inline-block bg-brand-accent/5 text-brand-accent px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest mb-6">
-                Meisterbetrieb aus Dortmund – Handwerk mit Anspruch.
+                Werterhalt durch Perfektion.
               </div>
-              <h2 className="text-4xl md:text-5xl mb-8 leading-tight">
-                Ein Dach, das schützt. <br/> 
-                Ein Team, das liefert.
+              <h2 className="text-4xl md:text-5xl mb-8 leading-tight font-display font-black">
+                Dächer für Generationen. <br/> 
+                Sorglos-Paket inklusive.
               </h2>
-              <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-                Wir von Hoffmann Dachtechnik sind Ihr Meisterdachdeckerbetrieb für Dachneueindeckung, Sanierung und Reparatur in Dortmund und Umgebung. Bei uns bekommen Sie klare Beratung, saubere Ausführung und ein Ergebnis, das langfristig hält – ohne unnötige Umwege.
+              <p className="text-slate-600 text-lg mb-8 leading-relaxed font-medium">
+                Bei Hoffmann Dachtechnik trifft jahrzehntelange Erfahrung auf moderne Technik. Wir sind kein anonymer Großbetrieb, sondern Ihr lokaler Partner, der noch persönlich für die Qualität jedes einzelnen Ziegels bürgt.
               </p>
               
               <ul className="space-y-5 mb-10">
                 {[
-                  "Meisterliche Ausführung nach Handwerksstandard",
-                  "Verbindliche Abläufe mit festem Ansprechpartner",
-                  "Transparente Angebote statt pauschaler Versprechen",
-                  "Termintreue Umsetzung und ordentliche Baustelle"
+                  "100% Meisterqualität ohne Kompromisse",
+                  "Transparente Festpreise – garantiert ohne Aufschläge",
+                  "Digitale Planung & saubere Abwicklung",
+                  "Blitzschnelle Reaktion bei Notfällen"
                 ].map((text, i) => (
                   <li key={i} className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0">
@@ -416,13 +416,13 @@ export default function App() {
       </section>
 
       {/* 6. Leistungen Section */}
-      <section id="leistungen" className="section-padding bg-slate-50">
+      <section id="leistungen" className="section-padding bg-slate-50 overflow-hidden">
         <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="text-center max-w-3xl mx-auto mb-20 text-brand-dark">
             <div className="inline-block bg-brand-dark text-white px-4 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest mb-6">
               Meisterleistung rund ums Dach
             </div>
-            <h2 className="text-4xl md:text-5xl mb-8">Unsere Leistungen: Rundum-Dachservice in Dortmund</h2>
+            <h2 className="text-4xl md:text-5xl mb-8 font-display font-black tracking-tight">Unsere Leistungen: Rundum-Dachservice in Dortmund</h2>
             <p className="text-slate-500 font-medium leading-relaxed">
               Wir übernehmen Dachneueindeckungen, Sanierungen und Reparaturen in Dortmund und Umgebung – mit Meisterstandard, sauberer Baustelle und klaren Absprachen.
             </p>
@@ -443,7 +443,8 @@ export default function App() {
               <ChevronRight size={24} />
             </button>
 
-            <div className="overflow-hidden px-4 md:px-0">
+            {/* Carousel Window with Padding to avoid shadow clipping while maintaining centering */}
+            <div className="overflow-hidden py-16 -my-16 px-6 -mx-6">
               <motion.div 
                 animate={{ x: `-${serviceIndex * (100 / (typeof window !== 'undefined' && window.innerWidth < 640 ? 1 : (window.innerWidth < 1024 ? 2 : 3)))}%` }}
                 transition={{ type: "spring", stiffness: 100, damping: 20 }}
@@ -500,7 +501,7 @@ export default function App() {
             <div className="inline-block border border-slate-200 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest mb-6">
               Vertrauen entsteht durch Ergebnisse
             </div>
-            <h2 className="text-4xl md:text-5xl mb-6 font-display font-black tracking-tight">Was unsere Kunden über uns sagen</h2>
+            <h2 className="text-4xl md:text-5xl mb-6 font-display font-black tracking-tight">Was unsere Kunden über <br className="hidden md:block"/> uns sagen</h2>
             <p className="text-slate-500 font-medium leading-relaxed">
               Ob Neueindeckung, Sanierung oder Reparatur: Unsere Kunden schätzen klare Absprachen, saubere Ausführung und ein Ergebnis, das langfristig hält.
             </p>
