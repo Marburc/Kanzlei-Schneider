@@ -71,3 +71,39 @@
   --chat--input--border-color-active: #e63946;
   --chat--border-radius: 16px;
 }
+
+/* Avatar-Bild im Toggle-Button */
+.chat-window-toggle {
+  background-image: url('https://ui-avatars.com/api/?name=Max&background=e63946&color=fff&size=120&font-size=0.38&bold=true') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* Versteckt das Standard-Icon */
+.chat-window-toggle svg {
+  display: none !important;
+}
+
+/* Grüner Online-Indikator */
+.chat-window-toggle::after {
+  content: '' !important;
+  position: absolute !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: #22c55e !important;
+  border-radius: 50% !important;
+  top: 2px !important;
+  right: 2px !important;
+  border: 2px solid #ffffff !important;
+  animation: chat-pulse 2s infinite !important;
+  z-index: 10 !important;
+}
+
+@keyframes chat-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
