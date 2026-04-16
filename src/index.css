@@ -51,6 +51,7 @@
   --chat--header--color: #ffffff;
   --chat--heading--font-size: 1.1rem;
   --chat--subtitle--font-size: 0.8rem;
+  --chat--subtitle--line-height: 1.2;
 
   --chat--message--bot--background: #f1f3f5;
   --chat--message--bot--color: #121212;
@@ -72,12 +73,25 @@
   --chat--border-radius: 16px;
 }
 
-/* Avatar-Bild im Toggle-Button */
+/* Header-Abstand zwischen Titel und Untertitel verringern */
+.chat-window-header h1,
+.chat-window-header .chat-window-header-title {
+  margin-bottom: 2px !important;
+}
+
+.chat-window-header p,
+.chat-window-header .chat-window-header-subtitle {
+  margin-top: 2px !important;
+  line-height: 1.2 !important;
+}
+
+/* Chat-Bubble Icon im Toggle-Button */
 .chat-window-toggle {
-  background-image: url('https://ui-avatars.com/api/?name=Max&background=e63946&color=fff&size=120&font-size=0.38&bold=true') !important;
-  background-size: cover !important;
+  background-color: #e63946 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E") !important;
+  background-size: 55% !important;
   background-repeat: no-repeat !important;
-  background-position: center !important;
+  background-position: center 45% !important;
   position: relative !important;
   overflow: visible !important;
 }
