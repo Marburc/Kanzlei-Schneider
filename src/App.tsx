@@ -36,39 +36,39 @@ export default function App() {
 
   const services = [
     {
-      title: "Flachdach-Spezialisten",
-      desc: "Maximale Dichtigkeit für moderne Architektur. Wir sorgen dafür, dass Ihr Flachdach jahrzehntelang Wind und Wetter trotzt.",
-      image: "https://images.unsplash.com/photo-1508450859948-4e04fafd0554?auto=format&fit=crop&q=80&w=800",
+      title: "Neueindeckung",
+      desc: "Das Gesicht Ihres Hauses neu definiert. Wir verbauen hochwertige Materialien – von Tonziegel bis Schiefer – fachgerecht und langlebig.",
+      image: "https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Neueindeckung.jpg",
       cta: "Angebot anfordern"
     },
     {
-      title: "Dachfenster-Lösungen",
-      desc: "Mehr Licht, mehr Luft, mehr Lebensqualität. Passgenauer Einbau führender Marken für ein völlig neues Raumgefühl.",
-      image: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=800",
-      cta: "Licht ins Haus"
+      title: "Dachsanierung",
+      desc: "Aus Alt wird Sicher. Wir bringen Substanz und Optik Ihres Daches auf das nächste Level – inklusive Wertsteigerung Ihrer Immobilie.",
+      image: "https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Dachsanierung.jpg",
+      cta: "Jetzt sanieren"
     },
     {
-      title: "Energetische Dämmung",
-      desc: "Sparen Sie bares Geld durch intelligente Gebäudehüllen. Wir halten die Wärme im Haus und die Heizkosten im Keller.",
-      image: "https://images.unsplash.com/photo-1505798577917-a65157d3320a?auto=format&fit=crop&q=80&w=800",
+      title: "Wärmedämmung",
+      desc: "Sparen Sie bares Geld durch intelligente Dämmung. Wir halten die Wärme im Haus und die Heizkosten im Keller.",
+      image: "https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Wa%CC%88rmedemmung.jpg",
       cta: "Energie sparen"
     },
     {
-      title: "Dachsanierung 2.0",
-      desc: "Aus Alt wird Sicher. Wir bringen Substanz und Optik Ihres Daches auf das nächste Level – inklusive Wersteigerung Ihrer Immobilie.",
-      image: "https://images.unsplash.com/photo-1482731215275-a1f151646268?auto=format&fit=crop&q=80&w=800",
-      cta: "Werte erhalten"
+      title: "Dachfenster",
+      desc: "Mehr Licht, mehr Luft, mehr Lebensqualität. Passgenauer Einbau führender Marken für ein völlig neues Raumgefühl.",
+      image: "https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Dachfenster.jpg",
+      cta: "Licht ins Haus"
     },
     {
-      title: "Individuelle Neueindeckung",
-      desc: "Das Gesicht Ihres Hauses. Wählen Sie aus exklusiven Materialien – wir setzen Ihre Vision handwerksgerecht um.",
-      image: "https://images.unsplash.com/photo-1518349619113-03114f06ac3a?auto=format&fit=crop&q=80&w=800",
-      cta: "Stilvoll wohnen"
+      title: "Flachdach & Abdichtung",
+      desc: "Maximale Dichtigkeit für moderne Architektur. Wir sorgen dafür, dass Ihr Flachdach jahrzehntelang Wind und Wetter trotzt.",
+      image: "https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Flachdach%20%26%20Adichtung.jpg",
+      cta: "Angebot anfordern"
     },
     {
-      title: "Blitz-Reparatur",
+      title: "Dachreparaturen",
       desc: "Kein Schaden ist zu klein, kein Problem zu groß. Wir reparieren fachgerecht, bevor aus einer Kleinigkeit eine teure Sanierung wird.",
-      image: "https://images.unsplash.com/photo-1498322676051-57d6051d95c4?auto=format&fit=crop&q=80&w=800",
+      image: "https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Dachreperaturen.jpg",
       cta: "Hilfe anfordern"
     }
   ];
@@ -244,13 +244,13 @@ export default function App() {
       <section className="relative min-h-[80vh] pt-32 pb-44 overflow-hidden flex flex-col justify-center">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?auto=format&fit=crop&q=80&w=2600" 
+            src="https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Hero.jpg" 
             alt="Dachdecker Dortmund Professionell"
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-brand-dark/40 backdrop-blur-[0.5px]"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/20 via-transparent to-brand-dark/40"></div>
+          <div className="absolute inset-0 bg-brand-dark/60 backdrop-blur-[0.5px]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/30 via-brand-dark/10 to-brand-dark/50"></div>
         </div>
         
         <div className="container-custom relative z-10">
@@ -513,7 +513,68 @@ export default function App() {
         </div>
       </section>
 
-      {/* 7. Testimonials Section (Continuous Scrolling) */}
+      {/* 7. Ablauf Section */}
+      <section className="pt-0 pb-20 md:pb-32 bg-slate-50">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-block border border-slate-200 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest mb-6">
+              So einfach geht's
+            </div>
+            <h2 className="text-4xl md:text-5xl mb-6 font-display font-black tracking-tight">
+              In drei Schritten <br className="hidden md:block"/> zum neuen Dach
+            </h2>
+            <p className="text-slate-500 font-medium leading-relaxed">
+              Von der ersten Beratung bis zur finalen Abnahme – bei uns wissen Sie immer, was als Nächstes kommt.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto">
+            {[
+              {
+                step: "01",
+                title: "Beratung & Dachanalyse",
+                desc: "Wir kommen zu Ihnen, begutachten den Ist-Zustand und beraten Sie ehrlich – welche Maßnahmen wirklich nötig sind und welche nicht. Sie erhalten ein transparentes Festpreis-Angebot ohne versteckte Kosten.",
+                icon: <Stethoscope className="w-6 h-6" />
+              },
+              {
+                step: "02",
+                title: "Fachgerechte Umsetzung",
+                desc: "Unser Meisterteam setzt Ihr Projekt termingerecht und sauber um. Wir schützen Ihr Eigentum, halten die Baustelle ordentlich und informieren Sie über jeden Fortschritt.",
+                icon: <Hammer className="w-6 h-6" />
+              },
+              {
+                step: "03",
+                title: "Qualitätscheck & Abnahme",
+                desc: "Zum Abschluss prüfen wir jedes Detail gemeinsam mit Ihnen. Erst wenn Sie zufrieden sind, ist der Auftrag für uns erledigt – inklusive Gewährleistung und Nachsorge.",
+                icon: <ShieldCheck className="w-6 h-6" />
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                className="relative text-center"
+              >
+                {i < 2 && (
+                  <div className="hidden md:block absolute top-10 left-[60%] w-[80%] border-t-2 border-dashed border-slate-300 z-0"></div>
+                )}
+                <div className="relative z-10 w-20 h-20 mx-auto mb-6 rounded-2xl bg-brand-accent/10 flex items-center justify-center">
+                  <span className="text-brand-accent font-display font-black text-2xl">{item.step}</span>
+                </div>
+                <div className="w-10 h-10 mx-auto -mt-3 mb-4 rounded-full bg-white border border-slate-200 flex items-center justify-center text-brand-accent">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-display font-bold mb-3">{item.title}</h3>
+                <p className="text-slate-500 font-medium leading-relaxed text-sm">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Testimonials Section (Continuous Scrolling) */}
       <section className="py-24 bg-white overflow-hidden">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -579,7 +640,7 @@ export default function App() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?auto=format&fit=crop&q=80&w=2600" 
+            src="https://sichtbr.b-cdn.net/Dachdecker%20Sample%20Site/Leistungen/Hero.jpg" 
             alt="Dacharbeiten Hintergrund"
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
