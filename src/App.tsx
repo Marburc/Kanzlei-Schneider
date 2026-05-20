@@ -20,9 +20,7 @@ import {
   Stethoscope,
   Star
 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { createChat } from '@n8n/chat';
-import '@n8n/chat/style.css';
+import { useState } from "react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -74,23 +72,6 @@ export default function App() {
   ];
 
   const [serviceIndex, setServiceIndex] = useState(0);
-
-  useEffect(() => {
-    createChat({
-      webhookUrl: 'https://upscale-marketing.app.n8n.cloud/webhook/31c335d4-732a-4fc3-afd6-afea7c9284c2/chat',
-      mode: 'window',
-      initialMessages: [
-        'Hallo! Ich bin Max, Ihr digitaler Assistent der Hoffmann Dachtechnik. Wie kann ich Ihnen helfen?'
-      ],
-      i18n: {
-        en: {
-          title: 'Max – Ihr Dach-Assistent',
-          subtitle: 'Fragen rund ums Dach? Ich helfe gerne.',
-          inputPlaceholder: 'Ihre Frage...',
-        }
-      }
-    });
-  }, []);
 
   const nextService = () => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
