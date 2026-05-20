@@ -616,7 +616,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 8. Final CTA Section */}
+      {/* Final CTA Section */}
       <section id="kontakt" className="relative py-24 md:py-32 overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
