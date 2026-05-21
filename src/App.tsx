@@ -3,14 +3,66 @@ import {
   Phone, Mail, MapPin, Clock, ShieldCheck,
   Award, CheckCircle2, ArrowRight,
   ChevronLeft, ChevronRight, Menu, X,
-  Star, Scale, FileText, AlertTriangle,
-  TrendingUp, Calendar, ChevronDown, Users
+  Star, Scale, FileText, Zap,
+  MessageSquare, ChevronDown, Users
 } from "lucide-react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+const SectionLine = ({ flip = false }: { flip?: boolean }) => (
+  <div className="relative h-12 overflow-hidden pointer-events-none" aria-hidden="true">
+    <svg viewBox="0 0 1600 48" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+      <path
+        d={flip
+          ? "M 1600 36 C 1200 8, 900 42, 600 16 C 350 2, 150 30, 0 22"
+          : "M 0 36 C 400 8, 700 42, 1000 16 C 1250 2, 1450 30, 1600 22"}
+        stroke="#b8860b" strokeWidth="0.8" fill="none" opacity="0.18"
+      />
+    </svg>
+  </div>
+);
+
+const leistungen = [
+  { label: "Verkehrsunfall", href: "/leistungen/verkehrsunfall" },
+  { label: "Führerscheinentzug", href: "/leistungen/fuehrerscheinentzug" },
+  { label: "Bußgeldbescheid", href: "/leistungen/bussgeld" },
+  { label: "Fahrerflucht", href: "/leistungen/fahrerflucht" },
+  { label: "Alkohol & Drogen am Steuer", href: "/leistungen/alkohol-drogen" },
+  { label: "Kfz-Haftpflicht & Versicherung", href: "/leistungen/kfz-haftpflicht" },
+];
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isLeistungenOpen, setIsLeistungenOpen] = useState(false);
+  const [isMobileLeistungenOpen, setIsMobileLeistungenOpen] = useState(false);
+
+  const [formData, setFormData] = useState({ name: "", phone: "", anliegen: "" });
+  const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [formError, setFormError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus("loading");
+    setFormError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.name.split(" ")[0] ?? formData.name,
+          lastName: formData.name.split(" ").slice(1).join(" ") || "-",
+          phone: formData.phone,
+          anliegen: formData.anliegen,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Unbekannter Fehler");
+      setFormStatus("success");
+    } catch (err: unknown) {
+      setFormStatus("error");
+      setFormError(err instanceof Error ? err.message : "Bitte versuche es erneut.");
+    }
+  };
 
   const toggleFaq = (index: number) => {
     setOpenFaq(prev => (prev === index ? null : index));
@@ -18,7 +70,7 @@ export default function App() {
 
   const stats = [
     {
-      icon: <Calendar className="w-6 h-6" />,
+      icon: <CheckCircle2 className="w-6 h-6" />,
       title: "Kostenloses Erstgespräch",
       desc: "Kein Risiko, kein versteckter Aufwand. Erst beraten, dann entscheiden."
     },
@@ -94,21 +146,26 @@ export default function App() {
     setCaseIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
-  const whyLawyer = [
+  const vorteile = [
     {
-      icon: <AlertTriangle className="w-8 h-8" />,
-      title: "Fristen verpassen kostet Rechte",
-      desc: "Viele Bescheide haben eine Einspruchsfrist von nur 2 Wochen. Wer wartet, verliert. Handeln Sie sofort."
+      icon: <ShieldCheck className="w-7 h-7" />,
+      title: "Kostenlose Ersteinschätzung",
+      desc: "Erfahren Sie schnell und unverbindlich, welche Erfolgschancen Sie in Ihrer verkehrsrechtlichen Angelegenheit haben."
     },
     {
-      icon: <TrendingUp className="w-8 h-8" />,
-      title: "Versicherungen zahlen nicht freiwillig",
-      desc: "Ein Anwalt erhöht die durchschnittliche Schadensregulierung nachweislich. Ich verhandle für Sie."
+      icon: <Users className="w-7 h-7" />,
+      title: "Persönliche Betreuung",
+      desc: "Sie sprechen immer direkt mit mir – kein Assistent, kein Callcenter. Ihr Fall liegt in einer Hand."
     },
     {
-      icon: <ShieldCheck className="w-8 h-8" />,
-      title: "Ein Einspruch lohnt sich",
-      desc: "In über 70% der Fälle führt ein anwaltlicher Einspruch zu Reduzierung oder Einstellung des Verfahrens."
+      icon: <Zap className="w-7 h-7" />,
+      title: "Schnelle Reaktion",
+      desc: "Wir wissen, dass Zeit im Verkehrsrecht zählt. Ich reagiere umgehend und prüfe Ihren Fall ohne Verzögerung."
+    },
+    {
+      icon: <MessageSquare className="w-7 h-7" />,
+      title: "Klare Kommunikation",
+      desc: "Kein Fachjargon – verständliche Erklärungen und transparente Beratung auf Augenhöhe."
     }
   ];
 
@@ -231,16 +288,46 @@ export default function App() {
 
           <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-600">
             <a href="#" className="hover:text-brand-accent transition-colors">Start</a>
-            <a href="#leistungen" className="hover:text-brand-accent transition-colors">Leistungen</a>
+
+            {/* Leistungen Dropdown */}
+            <div className="relative" onMouseEnter={() => setIsLeistungenOpen(true)} onMouseLeave={() => setIsLeistungenOpen(false)}>
+              <button className="flex items-center gap-1 hover:text-brand-accent transition-colors">
+                Leistungen
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isLeistungenOpen ? "rotate-180" : ""}`} />
+              </button>
+              <AnimatePresence>
+                {isLeistungenOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50"
+                  >
+                    {leistungen.map((item) => (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:text-brand-accent hover:bg-slate-50 transition-colors text-sm font-bold"
+                      >
+                        <ArrowRight className="w-3.5 h-3.5 text-brand-accent shrink-0" />
+                        {item.label}
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             <a href="#ueber-mich" className="hover:text-brand-accent transition-colors">Über mich</a>
             <a href="#ablauf" className="hover:text-brand-accent transition-colors">Ablauf</a>
             <a href="#faq" className="hover:text-brand-accent transition-colors">FAQ</a>
             <a
-              href="#kontakt"
-              className="bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-2.5 rounded-full flex items-center gap-2 group transition-all shadow-md"
+              href="tel:+4908912345678"
+              className="flex items-center gap-2 bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-2.5 rounded-full font-black transition-all shadow-md tracking-wide text-sm"
             >
-              Erstgespräch buchen
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <Phone className="w-4 h-4 shrink-0" />
+              089 – 123 456 78
             </a>
           </div>
 
@@ -259,7 +346,42 @@ export default function App() {
           >
             <div className="flex flex-col p-6 gap-6 font-bold text-slate-700">
               <a href="#" onClick={() => setIsMenuOpen(false)}>Start</a>
-              <a href="#leistungen" onClick={() => setIsMenuOpen(false)}>Leistungen</a>
+
+              {/* Mobile Leistungen accordion */}
+              <div>
+                <button
+                  onClick={() => setIsMobileLeistungenOpen(p => !p)}
+                  className="flex items-center justify-between w-full"
+                >
+                  Leistungen
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isMobileLeistungenOpen ? "rotate-180" : ""}`} />
+                </button>
+                <AnimatePresence>
+                  {isMobileLeistungenOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pl-4 mt-3 flex flex-col gap-3 border-l-2 border-brand-accent/30">
+                        {leistungen.map((item) => (
+                          <a
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setIsMenuOpen(false)}
+                            className="text-sm text-slate-500 hover:text-brand-accent transition-colors"
+                          >
+                            {item.label}
+                          </a>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
               <a href="#ueber-mich" onClick={() => setIsMenuOpen(false)}>Über mich</a>
               <a href="#ablauf" onClick={() => setIsMenuOpen(false)}>Ablauf</a>
               <a href="#faq" onClick={() => setIsMenuOpen(false)}>FAQ</a>
@@ -276,62 +398,176 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] pt-32 pb-44 overflow-hidden flex flex-col justify-center">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1600&q=80"
-            alt="Rechtsanwalt Verkehrsrecht München"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-brand-dark/85"></div>
+      <section className="relative pt-28 pb-20 overflow-hidden flex flex-col justify-center bg-gradient-to-br from-slate-50 via-white to-amber-50/20">
+        {/* Straßen-SVG Hintergrund */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 1600 900"
+            preserveAspectRatio="xMidYMid slice"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <filter id="roadGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            {/* Äußere Linie */}
+            <path d="M 1350 920 C 1200 750, 950 650, 820 500 C 700 360, 780 200, 1000 20"
+              stroke="#b8860b" strokeWidth="1" fill="none" opacity="0.2" filter="url(#roadGlow)" />
+            <path d="M 1350 920 C 1200 750, 950 650, 820 500 C 700 360, 780 200, 1000 20"
+              stroke="#b8860b" strokeWidth="0.5" fill="none" opacity="0.35" />
+            {/* Innere Linie */}
+            <path d="M 1200 920 C 1070 750, 840 650, 720 500 C 610 360, 700 200, 920 20"
+              stroke="#b8860b" strokeWidth="1" fill="none" opacity="0.15" filter="url(#roadGlow)" />
+            <path d="M 1200 920 C 1070 750, 840 650, 720 500 C 610 360, 700 200, 920 20"
+              stroke="#b8860b" strokeWidth="0.5" fill="none" opacity="0.25" />
+          </svg>
         </div>
 
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-accent/15 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-
         <div className="container-custom relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center gap-2 bg-brand-accent/20 border border-brand-accent/30 rounded-full px-4 py-2 mb-8">
-              <Scale className="w-4 h-4 text-brand-accent" />
-              <span className="text-sm font-bold text-white tracking-wide">Kostenlose Erstberatung · München & Umgebung</span>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            <h1 className="text-white text-5xl md:text-7xl mb-8 leading-[1.05] font-display font-black tracking-tight">
-              Ihr Führerschein.<br />
-              Ihr Recht.<br />
-              <span className="text-brand-accent">Meine Aufgabe.</span>
-            </h1>
+            {/* Links: Text */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <div className="inline-flex items-center gap-2 bg-brand-accent/10 border border-brand-accent/25 rounded-full px-4 py-2 mb-8">
+                <Scale className="w-4 h-4 text-brand-accent" />
+                <span className="text-sm font-bold text-brand-dark tracking-wide">Kostenlose Erstberatung · Berlin & Umgebung</span>
+              </div>
 
-            <p className="text-slate-300 text-lg md:text-xl mb-12 max-w-2xl font-medium leading-relaxed">
-              Als Rechtsanwalt für Verkehrsrecht stehe ich Ihnen bei Unfällen, Bußgeldbescheiden und Führerscheinentzug zur Seite – schnell, kompetent und persönlich.
-            </p>
+              <h1 className="text-brand-dark text-5xl md:text-6xl mb-6 leading-[1.05] font-display font-black tracking-tight">
+                Ihr Anwalt für<br />
+                <span className="text-brand-accent">Verkehrsrecht</span><br />
+                in Berlin.
+              </h1>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="#kontakt"
-                className="bg-brand-accent hover:bg-brand-accent-hover text-white px-10 py-4 rounded-full font-black text-lg transition-all shadow-[0_20px_50px_rgba(184,134,11,0.35)] flex items-center justify-center gap-3 group"
-              >
-                Kostenloses Erstgespräch
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <a
-                href="tel:08198765432"
-                className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-10 py-4 rounded-full font-black text-lg transition-all flex items-center justify-center gap-3"
-              >
-                <Phone className="w-5 h-5 text-brand-accent" />
-                Jetzt anrufen
-              </a>
-            </div>
-          </motion.div>
+              <p className="text-slate-600 text-lg mb-10 font-medium leading-relaxed">
+                Bei Unfällen, Bußgeldbescheiden und Führerscheinentzug – schnell, kompetent und persönlich.
+              </p>
+
+              {/* Trust-Badges */}
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm">
+                  <div className="flex text-yellow-400 gap-0.5">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
+                  </div>
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                  </svg>
+                  <span className="text-slate-700 text-xs font-bold">4,9 · Google</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm">
+                  <CheckCircle2 className="w-4 h-4 text-brand-accent" />
+                  <span className="text-slate-700 text-xs font-bold">500+ Fälle</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm">
+                  <Clock className="w-4 h-4 text-brand-accent" />
+                  <span className="text-slate-700 text-xs font-bold">Antwort in 24h</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Rechts: Formular */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+            >
+              <div className="bg-white/55 backdrop-blur-md border border-white/70 rounded-3xl p-8 shadow-xl">
+                {formStatus === "success" ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-8"
+                  >
+                    <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle2 className="w-10 h-10 text-green-600" />
+                    </div>
+                    <h3 className="text-2xl font-display font-black text-brand-dark mb-3">Vielen Dank!</h3>
+                    <p className="text-slate-500 font-medium">Ich melde mich innerhalb von 24 Stunden bei Ihnen.</p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="mb-2">
+                      <h3 className="text-xl font-display font-black text-brand-dark mb-1">Kostenloses Erstgespräch</h3>
+                      <p className="text-slate-500 text-sm font-medium">Unverbindlich · Antwort innerhalb 24h</p>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Name *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                        className="w-full bg-white/70 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors"
+                        placeholder="Max Mustermann"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
+                        className="w-full bg-white/70 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors"
+                        placeholder="+49 89 123456"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Ihr Anliegen *</label>
+                      <textarea
+                        required
+                        rows={3}
+                        value={formData.anliegen}
+                        onChange={e => setFormData(p => ({ ...p, anliegen: e.target.value }))}
+                        className="w-full bg-white/70 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors resize-none"
+                        placeholder="Bitte schildern Sie kurz Ihren Fall..."
+                      />
+                    </div>
+
+                    {formStatus === "error" && (
+                      <p className="text-red-500 text-sm font-medium">{formError}</p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={formStatus === "loading"}
+                      className="w-full bg-brand-accent hover:bg-brand-accent-hover disabled:opacity-60 text-white py-4 rounded-full font-black text-base transition-all flex items-center justify-center gap-3 group"
+                    >
+                      {formStatus === "loading" ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                          Wird gesendet...
+                        </>
+                      ) : (
+                        <>
+                          Jetzt anfragen
+                          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
       {/* Stats Cards */}
-      <section className="relative -mt-20 z-20 mb-20">
+      <section className="relative z-20 py-16 bg-slate-100">
         <div className="container-custom">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {stats.map((stat, i) => (
@@ -355,7 +591,7 @@ export default function App() {
       </section>
 
       {/* Über mich */}
-      <section id="ueber-mich" className="section-padding bg-white">
+      <section id="ueber-mich" className="section-padding bg-slate-100">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -399,37 +635,19 @@ export default function App() {
             >
               <div className="rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1560250097-0dc05ae8b97a?auto=format&fit=crop&w=800&q=80"
+                  src="/about-us.png"
                   alt="Rechtsanwalt Schneider"
-                  className="w-full h-[500px] object-cover"
+                  className="w-full h-[500px] object-cover object-right"
                 />
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-brand-accent text-white rounded-2xl p-6 shadow-xl">
-                <p className="font-display font-black text-3xl">Zugelassen</p>
-                <p className="text-sm font-bold opacity-90">Rechtsanwaltskammer München</p>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Partner Logos */}
-      <section className="py-12 bg-white border-y border-slate-100 overflow-hidden relative">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
-        <motion.div
-          animate={{ x: [0, -1200] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="flex gap-16 items-center"
-        >
-          {[...partners, ...partners, ...partners].map((p, i) => (
-            <img key={i} src={p.logo} alt={p.name} className="h-8 opacity-30 hover:opacity-60 transition-opacity shrink-0" />
-          ))}
-        </motion.div>
-      </section>
 
       {/* Leistungen / Falltypen */}
-      <section id="leistungen" className="section-padding bg-slate-50 overflow-hidden">
+      <section id="leistungen" className="section-padding bg-white">
         <div className="container-custom">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
@@ -457,7 +675,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="overflow-hidden">
+          <div className="overflow-x-clip -mx-10 px-10 pb-6">
             <motion.div
               animate={{ x: `-${caseIndex * (100 / 3)}%` }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -492,46 +710,52 @@ export default function App() {
         </div>
       </section>
 
-      {/* Warum ein Anwalt? */}
-      <section className="section-padding bg-brand-dark">
+      {/* Vorteile */}
+      <section className="section-padding bg-slate-100">
         <div className="container-custom">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 text-brand-accent font-black text-sm uppercase tracking-widest mb-4">
-              <div className="w-8 h-0.5 bg-brand-accent"></div>
-              Warum ein Anwalt?
-              <div className="w-8 h-0.5 bg-brand-accent"></div>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-white mb-4">
-              Drei Gründe, die zählen
-            </h2>
-            <p className="text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
-              Viele unterschätzen, was auf dem Spiel steht. Ich helfe Ihnen, Ihre Rechte zu sichern.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-2 text-brand-accent font-black text-sm uppercase tracking-widest mb-4">
+                <div className="w-8 h-0.5 bg-brand-accent"></div>
+                Was uns für Sie besonders macht
+              </div>
+              <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-brand-dark mb-6 leading-tight">
+                Ihre Vorteile bei der<br />
+                <span className="text-brand-accent">Kanzlei Schneider</span>
+              </h2>
+              <p className="text-slate-600 font-medium leading-relaxed">
+                Ob Verkehrsunfall, drohendes Fahrverbot oder eine Verkehrsstraftat – in verkehrsrechtlichen Angelegenheiten brauchen Sie schnelle, klare und zuverlässige Hilfe. Ich biete Ihnen eine kostenlose Ersteinschätzung und stehe Ihnen von Anfang an persönlich zur Seite.
+              </p>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {whyLawyer.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all"
-              >
-                <div className="w-16 h-16 rounded-2xl bg-brand-accent/20 flex items-center justify-center text-brand-accent mx-auto mb-6">
-                  {item.icon}
-                </div>
-                <h3 className="font-display font-black text-white mb-3 text-lg text-center">{item.title}</h3>
-                <p className="text-slate-400 text-sm font-medium leading-relaxed text-center">{item.desc}</p>
-              </motion.div>
-            ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {vorteile.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-slate-100"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent mb-4">
+                    {item.icon}
+                  </div>
+                  <h3 className="font-display font-black text-brand-dark mb-2 text-base leading-tight">{item.title}</h3>
+                  <p className="text-slate-500 text-sm font-medium leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Ablauf */}
-      <section id="ablauf" className="py-20 md:py-32 bg-slate-50">
+      <section id="ablauf" className="py-20 md:py-32 bg-white">
         <div className="container-custom">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-brand-accent font-black text-sm uppercase tracking-widest mb-4">
@@ -573,7 +797,7 @@ export default function App() {
       </section>
 
       {/* Bewertungen */}
-      <section className="py-24 bg-white overflow-hidden">
+      <section className="py-24 bg-white overflow-x-hidden">
         <div className="container-custom mb-12">
           <div className="inline-flex items-center gap-2 text-brand-accent font-black text-sm uppercase tracking-widest mb-4">
             <div className="w-8 h-0.5 bg-brand-accent"></div>
@@ -623,10 +847,25 @@ export default function App() {
             ))}
           </motion.div>
         </div>
+
+        <div className="container-custom mt-12 text-center">
+          <a
+            href="/bewertung.html"
+            className="inline-flex items-center gap-3 bg-white border border-slate-200 hover:border-brand-accent hover:shadow-md text-slate-700 hover:text-brand-accent font-bold px-7 py-4 rounded-full transition-all duration-200 shadow-sm"
+          >
+            <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+            </svg>
+            Bewertung abgeben
+          </a>
+        </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="section-padding bg-slate-50">
+      <section id="faq" className="section-padding bg-slate-100">
         <div className="container-custom">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-brand-accent font-black text-sm uppercase tracking-widest mb-4">
@@ -686,68 +925,38 @@ export default function App() {
         </div>
       </section>
 
-      {/* CTA Sektion */}
-      <section id="kontakt" className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1600&q=80"
-            alt="Kanzlei Hintergrund"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-brand-dark/95 backdrop-blur-sm"></div>
-        </div>
-
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accent/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-accent/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
-
-        <div className="container-custom relative z-10 text-center">
+      {/* Kontakt */}
+      <section id="kontakt" className="bg-brand-dark py-20">
+        <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
+            className="text-center mb-12"
           >
-            <h2 className="text-white text-4xl md:text-6xl mb-6 leading-[1.15] font-display font-black tracking-tight">
-              Warten Sie nicht.<br />
-              <span className="text-brand-accent">Fristen laufen.</span>
+            <h2 className="text-white text-3xl md:text-4xl font-display font-black tracking-tight mb-3">
+              Noch Fragen? Rufen Sie an.
             </h2>
-            <p className="text-slate-300 text-lg md:text-xl mb-12 max-w-3xl mx-auto font-medium leading-relaxed">
-              Das Erstgespräch ist kostenlos, unverbindlich und kann alles verändern. Ich sage Ihnen ehrlich, wie Ihre Chancen stehen.
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-6 mb-16">
-              <a
-                href="#"
-                className="bg-brand-accent hover:bg-brand-accent-hover text-white px-14 py-5 rounded-full font-black text-xl transition-all shadow-[0_20px_50px_rgba(184,134,11,0.3)] flex items-center justify-center gap-3 group"
-              >
-                <Calendar className="w-6 h-6" />
-                Termin vereinbaren
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <a
-                href="tel:08198765432"
-                className="bg-white hover:bg-slate-50 text-brand-dark px-14 py-5 rounded-full font-black text-xl transition-all shadow-2xl flex items-center justify-center gap-3"
-              >
-                <Phone className="w-6 h-6 text-brand-accent" />
-                Jetzt anrufen
-              </a>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-12 border-t border-white/10">
-              <div className="flex flex-col items-center">
-                <p className="text-brand-accent font-black text-2xl mb-2 tracking-tight">089 – 987 654 32</p>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Direktlinie</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <p className="text-brand-accent font-black text-2xl mb-2 tracking-tight">Mo–Fr 8–18 Uhr</p>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Erreichbarkeit</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <p className="text-white font-black text-xl mb-2 tracking-tight lowercase">info@kanzlei-schneider.de</p>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">E-Mail</p>
-              </div>
-            </div>
+            <p className="text-slate-400 font-medium">Oder nutzen Sie das Formular ganz oben auf dieser Seite.</p>
           </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-2xl p-6">
+              <Phone className="w-6 h-6 text-brand-accent mb-3" />
+              <p className="text-brand-accent font-black text-xl mb-1 tracking-tight">089 – 987 654 32</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Direktlinie</p>
+            </div>
+            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-2xl p-6">
+              <Mail className="w-6 h-6 text-brand-accent mb-3" />
+              <p className="text-brand-accent font-black text-sm mb-1 tracking-tight lowercase">info@kanzlei-schneider.de</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">E-Mail</p>
+            </div>
+            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-2xl p-6">
+              <Clock className="w-6 h-6 text-brand-accent mb-3" />
+              <p className="text-white font-black text-xl mb-1 tracking-tight">Mo–Fr 8–18 Uhr</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Erreichbarkeit</p>
+            </div>
+          </div>
         </div>
       </section>
 

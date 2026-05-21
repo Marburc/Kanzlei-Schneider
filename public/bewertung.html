@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bewertung abgeben – Kanzlei Schneider</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #b8860b;
+      --accent-hover: #9a7009;
+      --dark: #1e3a5f;
+      --subtle: #fdf8f0;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--subtle);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      background: var(--dark);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-badge svg {
+      width: 22px;
+      height: 22px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-name {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+
+    .logo-sub {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .star-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .star-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .1s;
+      user-select: none;
+    }
+
+    .star-option:hover {
+      border-color: var(--accent);
+      background: #fdf8f0;
+      transform: translateX(3px);
+    }
+
+    .star-option input[type="radio"] { display: none; }
+    .star-option .stars { font-size: 1.4rem; line-height: 1; }
+    .star-option .label { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+    .star-option .label span { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+
+    .checkmark {
+      width: 64px;
+      height: 64px;
+      background: #d1fae5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .checkmark svg {
+      width: 32px;
+      height: 32px;
+      stroke: #059669;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-google {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--dark);
+      color: #fff;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, transform .1s;
+      margin-top: 24px;
+    }
+
+    .btn-google:hover { background: #16304f; transform: translateY(-1px); }
+    .btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .redirect-note { font-size: 0.8rem; color: var(--muted); margin-top: 12px; }
+
+    #step-negative h1 { font-size: 1.25rem; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    .feedback-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: var(--subtle);
+      transition: border-color .2s;
+      outline: none;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); background: #fff; }
+    .form-group textarea { min-height: 110px; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s;
+      margin-top: 4px;
+    }
+
+    .btn-submit:hover { background: var(--accent-hover); }
+
+    #form-thanks { text-align: center; padding: 16px 0 8px; }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 560px) {
+      .card { padding: 32px 20px; }
+      h1 { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STEP 1: Sternbewertung -->
+  <div class="card" id="step-rating">
+    <div class="logo">
+      <div class="logo-badge">
+        <!-- Waage-Icon -->
+        <svg viewBox="0 0 24 24"><path d="M12 3v18M5 6l7-3 7 3M5 6l3 8a4 4 0 008 0l3-8"/></svg>
+      </div>
+      <div>
+        <div class="logo-name">Kanzlei Schneider</div>
+        <div class="logo-sub">Rechtsanwaltskanzlei</div>
+      </div>
+    </div>
+
+    <h1>Wie zufrieden waren Sie?</h1>
+    <p class="subtitle">Ihre Meinung hilft uns, noch besser zu werden.</p>
+
+    <div class="star-options">
+      <label class="star-option" onclick="handleRating(5)">
+        <input type="radio" name="rating" value="5" />
+        <span class="stars">⭐⭐⭐⭐⭐</span>
+        <span class="label">5 Sterne <span>– Ausgezeichnet</span></span>
+      </label>
+      <label class="star-option" onclick="handleRating(4)">
+        <input type="radio" name="rating" value="4" />
+        <span class="stars">⭐⭐⭐⭐</span>
+        <span class="label">4 Sterne <span>– Sehr gut</span></span>
+      </label>
+      <label class="star-option" onclick="handleRating(3)">
+        <input type="radio" name="rating" value="3" />
+        <span class="stars">⭐⭐⭐</span>
+        <span class="label">3 Sterne <span>– Gut</span></span>
+      </label>
+      <label class="star-option" onclick="handleRating(2)">
+        <input type="radio" name="rating" value="2" />
+        <span class="stars">⭐⭐</span>
+        <span class="label">2 Sterne <span>– Verbesserungswürdig</span></span>
+      </label>
+      <label class="star-option" onclick="handleRating(1)">
+        <input type="radio" name="rating" value="1" />
+        <span class="stars">⭐</span>
+        <span class="label">1 Stern <span>– Nicht zufrieden</span></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- STEP 2A: Positiv → Google -->
+  <div class="card hidden" id="step-positive">
+    <button class="btn-back" onclick="goBack()">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Zurück
+    </button>
+    <div style="text-align:center">
+      <div class="checkmark">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h1>Vielen Dank!</h1>
+      <p class="subtitle">
+        Es freut uns sehr, dass Sie zufrieden sind.<br>
+        Würden Sie uns auch auf Google bewerten? Das hilft anderen Mandanten enorm.
+      </p>
+      <a id="google-link" class="btn-google" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Jetzt auf Google bewerten
+      </a>
+      <p class="redirect-note">Sie werden zu Google Maps weitergeleitet.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2B: Negativ → Formular -->
+  <div class="card hidden" id="step-negative">
+    <button class="btn-back" onclick="goBack()">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Zurück
+    </button>
+    <div class="logo">
+      <div class="logo-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 3v18M5 6l7-3 7 3M5 6l3 8a4 4 0 008 0l3-8"/></svg>
+      </div>
+      <div>
+        <div class="logo-name">Kanzlei Schneider</div>
+        <div class="logo-sub">Rechtsanwaltskanzlei</div>
+      </div>
+    </div>
+
+    <h1>Das tut uns leid.</h1>
+    <p class="subtitle">Bitte teilen Sie uns mit, was wir besser machen können.</p>
+    <hr class="divider" />
+
+    <form class="feedback-form" id="feedback-form" onsubmit="handleFormSubmit(event)">
+      <div class="form-group">
+        <label for="fb-name">Name (optional)</label>
+        <input type="text" id="fb-name" placeholder="Max Mustermann" autocomplete="name" />
+      </div>
+      <div class="form-group">
+        <label for="fb-email">E-Mail (optional)</label>
+        <input type="email" id="fb-email" placeholder="max@beispiel.de" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label for="fb-message">Ihr Feedback <span style="color:var(--accent)">*</span></label>
+        <textarea id="fb-message" placeholder="Was können wir besser machen?" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Feedback absenden</button>
+    </form>
+
+    <div id="form-thanks" class="hidden" style="text-align:center;padding:16px 0 8px">
+      <div class="checkmark">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h1>Danke für Ihr Feedback!</h1>
+      <p class="subtitle">Wir haben Ihre Nachricht erhalten und werden uns darum kümmern.</p>
+    </div>
+  </div>
+
+  <script>
+    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=GOOGLE_PLACE_ID_HIER_EINSETZEN";
+
+    const stepRating   = document.getElementById("step-rating");
+    const stepPositive = document.getElementById("step-positive");
+    const stepNegative = document.getElementById("step-negative");
+
+    document.getElementById("google-link").href = GOOGLE_REVIEW_URL;
+
+    function handleRating(stars) {
+      if (stars >= 4) {
+        window.location.href = GOOGLE_REVIEW_URL;
+      } else {
+        stepRating.classList.add("hidden");
+        stepNegative.classList.remove("hidden");
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      document.getElementById("feedback-form").classList.add("hidden");
+      document.getElementById("form-thanks").classList.remove("hidden");
+    }
+
+    function goBack() {
+      stepNegative.classList.add("hidden");
+      stepPositive.classList.add("hidden");
+      document.getElementById("feedback-form").classList.remove("hidden");
+      document.getElementById("form-thanks").classList.add("hidden");
+      document.getElementById("feedback-form").reset();
+      stepRating.classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
