@@ -95,37 +95,37 @@ export default function App() {
     {
       title: "Verkehrsunfall",
       desc: "Schadenersatz, Schmerzensgeld und Regulierung gegenüber Versicherungen durchsetzen – ich kämpfe für Ihre vollen Ansprüche.",
-      image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80",
+      image: "/unfall.png",
       cta: "Jetzt beraten lassen"
     },
     {
       title: "Führerscheinentzug",
       desc: "MPU-Begleitung, Widerspruch gegen den Entzug und Antrag auf Wiedererteilung – Ihr Führerschein ist oft zu retten.",
-      image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80",
+      image: "/fuehrerscheinentzug.png",
       cta: "Führerschein retten"
     },
     {
       title: "Bußgeldbescheid",
       desc: "Einspruch einlegen, Punkte in Flensburg vermeiden und Verjährungsfristen nutzen – viele Bescheide sind anfechtbar.",
-      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80",
+      image: "/bussgeld.png",
       cta: "Bescheid prüfen lassen"
     },
     {
       title: "Fahrerflucht",
       desc: "Sofortige Strafverteidigung, Schadenminimierung und optimale Strategie – handeln Sie jetzt, bevor es zu spät ist.",
-      image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
+      image: "/fahrerflucht.png",
       cta: "Sofort handeln"
     },
     {
       title: "Alkohol & Drogen am Steuer",
       desc: "Sofortmaßnahmen nach Polizeikontrolle, Strafverteidigung und Führerscheinsicherung – jede Stunde zählt.",
-      image: "https://images.unsplash.com/photo-1544365558-35aa4afcf11f?auto=format&fit=crop&w=800&q=80",
+      image: "/alkohol.png",
       cta: "Sofort beraten lassen"
     },
     {
       title: "Kfz-Haftpflicht & Versicherung",
       desc: "Regulierungsstreit mit Versicherungen, volle Anspruchsdurchsetzung – ich hole heraus, was Ihnen zusteht.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+      image: "/versicherung.png",
       cta: "Ansprüche durchsetzen"
     }
   ];
@@ -398,61 +398,41 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-28 pb-20 overflow-hidden flex flex-col justify-center bg-gradient-to-br from-slate-50 via-white to-amber-50/20">
-        {/* Straßen-SVG Hintergrund */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 1600 900"
-            preserveAspectRatio="xMidYMid slice"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <filter id="roadGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
-            </defs>
-            {/* Äußere Linie */}
-            <path d="M 1350 920 C 1200 750, 950 650, 820 500 C 700 360, 780 200, 1000 20"
-              stroke="#b8860b" strokeWidth="1" fill="none" opacity="0.2" filter="url(#roadGlow)" />
-            <path d="M 1350 920 C 1200 750, 950 650, 820 500 C 700 360, 780 200, 1000 20"
-              stroke="#b8860b" strokeWidth="0.5" fill="none" opacity="0.35" />
-            {/* Innere Linie */}
-            <path d="M 1200 920 C 1070 750, 840 650, 720 500 C 610 360, 700 200, 920 20"
-              stroke="#b8860b" strokeWidth="1" fill="none" opacity="0.15" filter="url(#roadGlow)" />
-            <path d="M 1200 920 C 1070 750, 840 650, 720 500 C 610 360, 700 200, 920 20"
-              stroke="#b8860b" strokeWidth="0.5" fill="none" opacity="0.25" />
-          </svg>
-        </div>
+      <section className="relative h-[85vh] max-h-[800px] flex items-center overflow-hidden">
+        {/* Hintergrundbild — horizontal gespiegelt damit Anwalt rechts erscheint */}
+        <img
+          src="/about-us.png"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-top [transform:scaleX(-1)]"
+        />
+        {/* Gradient-Overlay: links dunkel für Lesbarkeit, rechts fast unsichtbar */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#111111]/88 from-[25%] via-[#111111]/45 via-[45%] to-transparent to-[65%]" />
 
-        <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-            {/* Links: Text */}
+        <div className="container-custom relative z-10 pt-20">
+          <div className="max-w-xl">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
-              <div className="inline-flex items-center gap-2 bg-brand-accent/10 border border-brand-accent/25 rounded-full px-4 py-2 mb-8">
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-8">
                 <Scale className="w-4 h-4 text-brand-accent" />
-                <span className="text-sm font-bold text-brand-dark tracking-wide">Kostenlose Erstberatung · Berlin & Umgebung</span>
+                <span className="text-sm font-bold text-white tracking-wide">Kostenlose Erstberatung · Berlin & Umgebung</span>
               </div>
 
-              <h1 className="text-brand-dark text-5xl md:text-6xl mb-6 leading-[1.05] font-display font-black tracking-tight">
+              <h1 className="text-white text-5xl md:text-6xl mb-6 leading-[1.05] font-display font-black tracking-tight">
                 Ihr Anwalt für<br />
                 <span className="text-brand-accent">Verkehrsrecht</span><br />
                 in Berlin.
               </h1>
 
-              <p className="text-slate-600 text-lg mb-10 font-medium leading-relaxed">
+              <p className="text-white/80 text-lg mb-10 font-medium leading-relaxed">
                 Bei Unfällen, Bußgeldbescheiden und Führerscheinentzug – schnell, kompetent und persönlich.
               </p>
 
               {/* Trust-Badges */}
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm">
+              <div className="flex flex-wrap items-center gap-3 mb-10">
+                <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
                   <div className="flex text-yellow-400 gap-0.5">
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
                   </div>
@@ -462,106 +442,30 @@ export default function App() {
                     <path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"/>
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
                   </svg>
-                  <span className="text-slate-700 text-xs font-bold">4,9 · Google</span>
+                  <span className="text-white text-xs font-bold">4,9 · Google</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm">
+                <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
                   <CheckCircle2 className="w-4 h-4 text-brand-accent" />
-                  <span className="text-slate-700 text-xs font-bold">500+ Fälle</span>
+                  <span className="text-white text-xs font-bold">500+ Fälle</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 shadow-sm">
+                <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
                   <Clock className="w-4 h-4 text-brand-accent" />
-                  <span className="text-slate-700 text-xs font-bold">Antwort in 24h</span>
+                  <span className="text-white text-xs font-bold">Antwort in 24h</span>
                 </div>
               </div>
-            </motion.div>
 
-            {/* Rechts: Formular */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-            >
-              <div className="bg-white/55 backdrop-blur-md border border-white/70 rounded-3xl p-8 shadow-xl">
-                {formStatus === "success" ? (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-8"
-                  >
-                    <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-                      <CheckCircle2 className="w-10 h-10 text-green-600" />
-                    </div>
-                    <h3 className="text-2xl font-display font-black text-brand-dark mb-3">Vielen Dank!</h3>
-                    <p className="text-slate-500 font-medium">Ich melde mich innerhalb von 24 Stunden bei Ihnen.</p>
-                  </motion.div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="mb-2">
-                      <h3 className="text-xl font-display font-black text-brand-dark mb-1">Kostenloses Erstgespräch</h3>
-                      <p className="text-slate-500 text-sm font-medium">Unverbindlich · Antwort innerhalb 24h</p>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Name *</label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                        className="w-full bg-white/70 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors"
-                        placeholder="Max Mustermann"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
-                      <input
-                        type="tel"
-                        value={formData.phone}
-                        onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
-                        className="w-full bg-white/70 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors"
-                        placeholder="+49 89 123456"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Ihr Anliegen *</label>
-                      <textarea
-                        required
-                        rows={3}
-                        value={formData.anliegen}
-                        onChange={e => setFormData(p => ({ ...p, anliegen: e.target.value }))}
-                        className="w-full bg-white/70 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors resize-none"
-                        placeholder="Bitte schildern Sie kurz Ihren Fall..."
-                      />
-                    </div>
-
-                    {formStatus === "error" && (
-                      <p className="text-red-500 text-sm font-medium">{formError}</p>
-                    )}
-
-                    <button
-                      type="submit"
-                      disabled={formStatus === "loading"}
-                      className="w-full bg-brand-accent hover:bg-brand-accent-hover disabled:opacity-60 text-white py-4 rounded-full font-black text-base transition-all flex items-center justify-center gap-3 group"
-                    >
-                      {formStatus === "loading" ? (
-                        <>
-                          <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                          Wird gesendet...
-                        </>
-                      ) : (
-                        <>
-                          Jetzt anfragen
-                          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4">
+                <a href="#kontakt" className="inline-flex items-center gap-2 bg-brand-accent hover:bg-brand-accent-hover text-white font-black px-8 py-4 rounded-full transition-all shadow-lg text-base">
+                  Jetzt kostenlos anfragen
+                  <ChevronRight className="w-5 h-5" />
+                </a>
+                <a href="tel:+4989123456" className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 text-white font-black px-7 py-4 rounded-full transition-all text-base">
+                  <Phone className="w-5 h-5" />
+                  089 – 123 456 78
+                </a>
               </div>
             </motion.div>
-
           </div>
         </div>
       </section>
@@ -635,9 +539,9 @@ export default function App() {
             >
               <div className="rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="/about-us.png"
+                  src="/Gemini_Generated_Image_wryv5wryv5wryv5w.png"
                   alt="Rechtsanwalt Schneider"
-                  className="w-full h-[500px] object-cover object-right"
+                  className="w-full h-[500px] object-cover object-top"
                 />
               </div>
             </motion.div>
@@ -926,36 +830,141 @@ export default function App() {
       </section>
 
       {/* Kontakt */}
-      <section id="kontakt" className="bg-brand-dark py-20">
+      <section id="kontakt" className="bg-brand-dark py-24">
         <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-white text-3xl md:text-4xl font-display font-black tracking-tight mb-3">
-              Noch Fragen? Rufen Sie an.
-            </h2>
-            <p className="text-slate-400 font-medium">Oder nutzen Sie das Formular ganz oben auf dieser Seite.</p>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            {/* Links: Headline + Trust + Telefon */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-2 text-brand-accent font-black text-sm uppercase tracking-widest mb-6">
+                <div className="w-8 h-0.5 bg-brand-accent" />
+                Kostenloses Erstgespräch
+              </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-2xl p-6">
-              <Phone className="w-6 h-6 text-brand-accent mb-3" />
-              <p className="text-brand-accent font-black text-xl mb-1 tracking-tight">089 – 987 654 32</p>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Direktlinie</p>
-            </div>
-            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-2xl p-6">
-              <Mail className="w-6 h-6 text-brand-accent mb-3" />
-              <p className="text-brand-accent font-black text-sm mb-1 tracking-tight lowercase">info@kanzlei-schneider.de</p>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">E-Mail</p>
-            </div>
-            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-2xl p-6">
-              <Clock className="w-6 h-6 text-brand-accent mb-3" />
-              <p className="text-white font-black text-xl mb-1 tracking-tight">Mo–Fr 8–18 Uhr</p>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Erreichbarkeit</p>
-            </div>
+              <h2 className="text-white text-4xl md:text-5xl font-display font-black tracking-tight leading-tight mb-6">
+                Fordern Sie jetzt Ihre kostenlose Ersteinschätzung an.
+              </h2>
+
+              <p className="text-slate-400 font-medium leading-relaxed mb-10">
+                Nach Ihrer Anfrage melde ich mich persönlich bei Ihnen. Das Ausfüllen dauert nur eine Minute – ich höre zu, bewerte Ihren Fall ehrlich und sage Ihnen, ob und wie ich helfen kann.
+              </p>
+
+              {/* Trust-Punkte */}
+              <ul className="space-y-4 mb-10">
+                {[
+                  'Hohe Erfolgsquote bei der Mandantenvertretung',
+                  'Persönliche Rückmeldung – kein Callcenter',
+                  'Vertraulich, unverbindlich und kostenlos',
+                  'Antwort garantiert innerhalb von 24 Stunden',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-brand-accent shrink-0 mt-0.5" />
+                    <span className="text-slate-300 font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+            </motion.div>
+
+            {/* Rechts: Formular + Telefon + Google Badge */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-white rounded-3xl p-8 shadow-2xl">
+                {formStatus === "success" ? (
+                  <div className="text-center py-8">
+                    <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle2 className="w-10 h-10 text-green-600" />
+                    </div>
+                    <h3 className="text-2xl font-display font-black text-brand-dark mb-3">Vielen Dank!</h3>
+                    <p className="text-slate-500 font-medium">Ich melde mich innerhalb von 24 Stunden bei Ihnen.</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Name *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors"
+                        placeholder="Max Mustermann"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Telefon</label>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors"
+                        placeholder="+49 89 123456"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Ihr Anliegen *</label>
+                      <textarea
+                        required
+                        rows={4}
+                        value={formData.anliegen}
+                        onChange={e => setFormData(p => ({ ...p, anliegen: e.target.value }))}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-brand-dark placeholder-slate-400 font-medium focus:outline-none focus:border-brand-accent transition-colors resize-none"
+                        placeholder="Bitte schildern Sie kurz Ihren Fall..."
+                      />
+                    </div>
+                    {formStatus === "error" && (
+                      <p className="text-red-500 text-sm font-medium">{formError}</p>
+                    )}
+                    <button
+                      type="submit"
+                      disabled={formStatus === "loading"}
+                      className="w-full bg-brand-accent hover:bg-brand-accent-hover disabled:opacity-60 text-white py-4 rounded-full font-black text-base transition-all flex items-center justify-center gap-3 group"
+                    >
+                      {formStatus === "loading" ? (
+                        <><div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />Wird gesendet...</>
+                      ) : (
+                        <>Jetzt anfragen<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              {/* Telefon unter dem Formular */}
+              <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Oder direkt anrufen</p>
+                  <a href="tel:+4989987654" className="inline-flex items-center gap-2 text-brand-accent hover:text-white transition-colors font-black text-xl">
+                    <Phone className="w-5 h-5" />
+                    089 – 987 654 32
+                  </a>
+                  <p className="text-slate-400 text-sm font-medium mt-0.5">Mo–Fr 8–18 Uhr</p>
+                </div>
+
+                {/* Google Badge */}
+                <div className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-md">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                  </svg>
+                  <div className="flex text-yellow-400 gap-0.5">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
+                  </div>
+                  <div>
+                    <span className="text-brand-dark font-black text-sm">4,9</span>
+                    <span className="text-slate-500 text-xs font-medium ml-1">· 120 Bewertungen</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
